@@ -10,5 +10,6 @@ void main() {
     expect(() => stackCalc("5 +"), throwsRangeError);
     expect(stackCalc("7 DUP *"), 49);
     expect(stackCalc("7 DUP + 8"), 8);
-  });
+  }
+  );
 }

@@ -59,7 +59,7 @@ int stackCalc(String inputString){
           }
           else{
             print('Division with zero is not possible, please check input');
-            return 0;
+            throw ArgumentError;
           }
 
         }
