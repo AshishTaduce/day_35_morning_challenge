@@ -3,7 +3,6 @@ import '../bin/main.dart';
 
 void main() {
   test('Test Case', () {
-    var errorThrower = Error();
     expect(stackCalc("5 6 +"), 11);
     expect(stackCalc("6 5 5 7 * - /"), 5);
     expect(stackCalc("3 DUP +"), 6);
