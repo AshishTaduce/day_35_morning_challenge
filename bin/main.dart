@@ -23,5 +23,71 @@
 //  stackCalc("6 5 5 7 * - /") ➞ 5
 //  stackCalc("x y +") ➞ Invalid instruction: x
 
+int stackCalc(String inputString){
+  if (inputString == ''){
+    return 0;
+  }
+  List<String> listOfInstructions = inputString.split(' ').toList();
+  List<int> stack = [];
+
+  for (String x in listOfInstructions){
+    if (isNumeric(x)){
+      stack.add(int.parse(x)) ;
+    }
+
+    else if (['+','*','/','-', 'DUP', 'POP',].contains(x) ){
+      try {
+        if (x == '+'){
+          int last = stack.removeLast();
+          int secondLast = stack.removeLast();
+          stack.add(last + secondLast);
+        }
+        if (x == '-'){
+          int last = stack.removeLast();
+          int secondLast = stack.removeLast();
+          stack.add(last - secondLast);        }
+        if (x == '*'){
+          int last = stack.removeLast();
+          int secondLast = stack.removeLast();
+          stack.add(last * secondLast);
+        }
+        if (x == '/'){
+          if (!(stack.last == 0 || stack[stack.length - 2] == 0)) {
+            int last = stack.removeLast();
+            int secondLast = stack.removeLast();
+            stack.add((last / secondLast).round());
+          }
+          else{
+            print('Division with zero is not possible, please check input');
+            return 0;
+          }
+
+        }
+      } on Error catch (e) {
+        rethrow;
+       }
+      if (x == 'POP'){
+        stack.removeLast();
+   }
+      if (x == 'DUP'){
+        stack.add(stack.last);
+      }
+    }
+
+    else{
+      print('Invalid Instruction $x');
+      return 0;
+    }
+  }
+  return stack.last;
+}
+
+bool isNumeric(String str) {
+  if(str == null) {
+    return false;
+  }
+  return int.tryParse(str) != null;
+}
+
 main() {
 }
