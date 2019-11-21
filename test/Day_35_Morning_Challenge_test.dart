@@ -8,7 +8,6 @@ void main() {
     expect(stackCalc("3 DUP +"), 6);
     expect(stackCalc("77 11 2 14 / * /"), 1);
     expect(() => stackCalc("5 +"), throwsRangeError);
-    expect(() =>stackCalc("5 +"), throwsException);
     expect(stackCalc("7 DUP *"), 49);
     expect(stackCalc("7 DUP + 8"), 8);
   });

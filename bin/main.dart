@@ -36,7 +36,7 @@ int stackCalc(String inputString){
     }
 
     else if (['+','*','/','-', 'DUP', 'POP',].contains(x) ){
-      try {
+
         if (x == '+'){
           int last = stack.removeLast();
           int secondLast = stack.removeLast();
@@ -63,9 +63,6 @@ int stackCalc(String inputString){
           }
 
         }
-      } on Error catch (e) {
-        rethrow;
-       }
       if (x == 'POP'){
         stack.removeLast();
    }
