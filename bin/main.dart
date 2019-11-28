@@ -30,32 +30,25 @@ int stackCalc(String inputString){
   List<String> listOfInstructions = inputString.split(' ').toList();
   List<int> stack = [];
 
-  for (String x in listOfInstructions){
-    if (isNumeric(x)){
-      stack.add(int.parse(x)) ;
+  for (String instr in listOfInstructions){
+    if (isNumeric(instr)){
+      stack.add(int.parse(instr)) ;
     }
 
-    else if (['+','*','/','-', 'DUP', 'POP',].contains(x) ){
+    else if (['+','*','/','-', 'DUP', 'POP',].contains(instr)){
 
-        if (x == '+'){
-          int last = stack.removeLast();
-          int secondLast = stack.removeLast();
-          stack.add(last + secondLast);
+        if (instr == '+'){
+          stack.add(calc(instr, stack));
         }
-        if (x == '-'){
-          int last = stack.removeLast();
-          int secondLast = stack.removeLast();
-          stack.add(last - secondLast);        }
-        if (x == '*'){
-          int last = stack.removeLast();
-          int secondLast = stack.removeLast();
-          stack.add(last * secondLast);
+        if (instr == '-'){
+          stack.add(calc(instr, stack));
         }
-        if (x == '/'){
+        if (instr == '*'){
+          stack.add(calc(instr, stack));
+        }
+        if (instr == '/'){
           if (!(stack.last == 0 || stack[stack.length - 2] == 0)) {
-            int last = stack.removeLast();
-            int secondLast = stack.removeLast();
-            stack.add((last / secondLast).round());
+            stack.add(calc(instr, stack));
           }
           else{
             print('Division with zero is not possible, please check input');
@@ -63,21 +56,47 @@ int stackCalc(String inputString){
           }
 
         }
-      if (x == 'POP'){
+      if (instr == 'POP'){
         stack.removeLast();
-   }
-      if (x == 'DUP'){
+      }
+      if (instr == 'DUP'){
         stack.add(stack.last);
       }
     }
 
     else{
-      print('Invalid Instruction $x');
+      print('Invalid Instruction $instr');
       return 0;
     }
   }
   return stack.last;
 }
+
+int calc(String callBack,List stack) {
+  int last = stack.removeLast();
+  int secondLast = stack.removeLast();
+  if (callBack == '+') {
+    return add(last, secondLast);
+  }
+  if (callBack == '-') {
+    return sub(last, secondLast);
+  }
+  if (callBack == '*') {
+    return mul(last, secondLast);
+  }
+  if (callBack == '/') {
+    if (last != 0 || secondLast != 0) {
+      return div(last, secondLast);
+    }
+    else{
+      throw ArgumentError;
+    }
+  }
+}
+int add(int x, int y) => x+y;
+int sub(int x, int y) => x-y;
+int mul(int x, int y) => x*y;
+int div(int x, int y) => x~/y;
 
 bool isNumeric(String str) {
   if(str == null) {
